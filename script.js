@@ -1,6 +1,8 @@
+// 1️⃣ Reference to the HTML div
 const app = document.getElementById('app');
 app.innerHTML = '<h2>Crypto Filter - World Class</h2><p>Loading data...</p>';
 
+// 2️⃣ Global variables
 const topCoins = 50;
 const updateInterval = 60 * 1000;
 
@@ -82,19 +84,26 @@ function calculateBollinger(closes, period = 20, mult = 2) {
     return { middle: sma, upper, lower };
 }
 
-// --- Fetch coin data ---
+// --- Fetch coin data (with CORS proxy) ---
 async function fetchTopCoins() {
-    const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${topCoins}&page=1&sparkline=false`);
+    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${topCoins}&page=1&sparkline=false`;
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const res = await fetch(proxyUrl);
     return res.json();
 }
 
 async function fetchOHLC(coinId, days = 90) {
-    const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=${days}`);
+    const url = `https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=${days}`;
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const res = await fetch(proxyUrl);
     return res.json(); // [[timestamp, open, high, low, close], ...]
 }
 
 // --- Scan function ---
 async function scanCoins() {
+    // Debug alert (temporary)
+    // alert("Scanning started");
+
     app.innerHTML = '<h2>Crypto Filter - World Class</h2><p>Scanning top coins...</p>';
     const coins = await fetchTopCoins();
     let tableHTML = `<table><tr>
