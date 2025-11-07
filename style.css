@@ -1,0 +1,6 @@
+
+body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0;}
+#app { max-width: 480px; margin: 1rem auto; padding: 1rem; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem;}
+th, td { border: 1px solid #ddd; padding: 0.3rem; text-align: center; font-size: 0.8rem;}
+th { background: #eee; }
